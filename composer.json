@@ -1,0 +1,21 @@
+{
+    "name": "umono/yii2-multiple",
+    "description": "A common and diverse Toolkit",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","multiple","tools"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "umono",
+            "email": "umono.life@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "umono\\multiple\\": ""
+        }
+    }
+}
