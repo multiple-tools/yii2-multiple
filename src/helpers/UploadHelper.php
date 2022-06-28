@@ -2,7 +2,6 @@
 
 	namespace umono\multiple\helpers;
 
-	use app\common\helpers\ImageHelper;
 	use app\common\tools\Ali\AliOss;
 	use yii\helpers\FileHelper;
 	use yii\web\ForbiddenHttpException;

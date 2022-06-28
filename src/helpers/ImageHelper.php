@@ -52,8 +52,8 @@
 		)
 		{
 			if (empty($coordinate)) {
-				$w          = \app\common\helpers\ImageHelper::text_width($text, $option['size'] ?? 14);
-				$h          = ImageHelper::text_height($text, $option['size'] ?? 14);
+				$w          = self::text_width($text, $option['size'] ?? 14);
+				$h          = self::text_height($text, $option['size'] ?? 14);
 				$fileInfo   = getimagesize($file);
 				$coordinate = [$fileInfo[0] - ($w + 20), $fileInfo[1] - (30 + $h)];
 				unset($fileInfo);
