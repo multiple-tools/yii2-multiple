@@ -24,13 +24,13 @@
 		}
 
 		//缩略图（压缩）
-		public static function actionThumb($file, $width, $height)
+		public static function actionThumb($file, $width, $height, $quality)
 		{
-			$imge        = Image::thumbnail($file, $width, $height, ManipulatorInterface::THUMBNAIL_FLAG_NOCLONE);
+			$img        = Image::thumbnail($file, $width, $height, ManipulatorInterface::THUMBNAIL_FLAG_NOCLONE);
 			$fileName    = basename($file);
 			$fileNameArr = explode(".", $fileName);
 			$thumbFile   = $file . '_ss_.' . $fileNameArr[1];
-			$imge->save($thumbFile);
+			$img->save($thumbFile, ['quality' => $quality]);
 			return $thumbFile;
 		}
 

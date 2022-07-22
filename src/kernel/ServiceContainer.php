@@ -1,6 +1,6 @@
 <?php
 
-	namespace app\common\components;
+	namespace umono\multiple\kernel;
 
 	use Pimple\Container;
 

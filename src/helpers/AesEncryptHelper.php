@@ -5,8 +5,8 @@
 	class AesEncryptHelper
 	{
 		//16位
-		public $AES_KEY = "3t12and4o92fLY20";
-		public $AES_IV = "30ut029d41oAf1YL";
+		public $AES_KEY = "yt12an145920LYyt";
+		public $AES_IV = "2y99029141NA21Yt";
 
 		/**
 		 * 解密

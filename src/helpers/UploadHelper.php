@@ -105,9 +105,17 @@
 			if ($this->saveAs($file, $filePath)) {
 				$publicFilePath = $this->publicPath . $resetName;
 
-				// 是否存储水印
-				if ($this->watermark) {
-					ImageHelper::actionText($filePath, $this->watermarkText, $this->watermarkSize);
+				// 图片资源处理
+				$type = exif_imagetype($filePath);
+
+				if($type > 0 || $type < 19) {
+					// 压缩图片
+					ImageHelper::actionThumb($filePath, $this->watermarkText, $this->watermarkSize);
+
+					// 是否存储水印
+					if ($this->watermark) {
+						ImageHelper::actionText($filePath, $this->watermarkText, $this->watermarkSize);
+					}
 				}
 
 				$url = getenv("APP_URL") . $publicFilePath;
@@ -174,7 +182,7 @@
 				$result
 			);
 			if (empty($result)) {
-				$this->error('读取文件失败！');
+				$this->error('fail to read file.');
 			}
 			$obj            = new \stdClass();
 			$obj->search    = $result[1];

@@ -3,7 +3,7 @@
 	namespace umono\multiple\tools\page;
 
 	use umono\multiple\helpers\StringHelper;
-	use umono\multiple\model\BaseActiveRecordModel;
+	use umono\multiple\model\ActiveRecordModel;
 	use yii\data\Pagination;
 	use yii\db\ActiveQuery;
 
@@ -39,10 +39,11 @@
 
 		/**
 		 * 返回表的列名
-		 * @param  $model BaseActiveRecordModel
+		 *
+		 * @param  $model ActiveRecordModel
 		 * @return array
 		 */
-		public function getColumn(BaseActiveRecordModel $model): array
+		public function getColumn(ActiveRecordModel $model): array
 		{
 			$table         = $model::tableName();
 			$this->table   = $table;
@@ -96,12 +97,12 @@
 		/**
 		 * 分页数据基础条件
 		 *
-		 * @param       $model BaseActiveRecordModel
+		 * @param       $model ActiveRecordModel
 		 * @param array $where
 		 * @param array $table
 		 * @return $this
 		 */
-		public function getTablesParam(BaseActiveRecordModel $model, array $where = [], array $table = []): PageHandler
+		public function getTablesParam(ActiveRecordModel $model, array $where = [], array $table = []): PageHandler
 		{
 
 			$this->formatParamHandler($where);
@@ -280,13 +281,13 @@
 		 * $page->toTableData($model,$where,$table,$select);
 		 *
 		 * ```
-		 * @param BaseActiveRecordModel $model
-		 * @param array                 $where
-		 * @param array                 $table
-		 * @param array                 $select
+		 * @param ActiveRecordModel $model
+		 * @param array             $where
+		 * @param array             $table
+		 * @param array             $select
 		 * @return array
 		 */
-		public function toTableData(BaseActiveRecordModel $model, array $where = [], array $table = [], array $select = []): array
+		public function toTableData(ActiveRecordModel $model, array $where = [], array $table = [], array $select = []): array
 		{
 			$attributes = $model->formatLabel();
 

@@ -3,7 +3,7 @@
 	namespace umono\multiple\tools\page;
 
 
-	use umono\multiple\model\BaseActiveRecordModel;
+	use umono\multiple\model\ActiveRecordModel;
 	use Yii;
 	use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 	use yii\web\BadRequestHttpException;
@@ -90,11 +90,11 @@
 		}
 
 		/**
-		 * @param       $model BaseActiveRecordModel
+		 * @param       $model ActiveRecordModel
 		 * @param array $param
 		 * @return \yii\console\Response|Response
 		 */
-		public function toGo(BaseActiveRecordModel $model, array $param = [])
+		public function toGo(ActiveRecordModel $model, array $param = [])
 		{
 
 			$data = [];

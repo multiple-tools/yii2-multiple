@@ -2,7 +2,8 @@
 
 	namespace umono\multiple\helpers;
 
-	use app\common\components\ServiceContainer;
+
+	use umono\multiple\kernel\ServiceContainer;
 
 	/**
 	 * @property StringHelper     $stringHelper

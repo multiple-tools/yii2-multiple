@@ -96,7 +96,7 @@
 		 * @param $select
 		 * @return array
 		 */
-		public function tableTitle($attributes, $select = []): array
+		public function tableTitle($attributes, $select = [])
 		{
 			if (empty($select)) {
 				$select = Yii::$app->request->get('select') ?? [];
