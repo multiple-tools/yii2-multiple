@@ -17,5 +17,18 @@
         "psr-4": {
             "umono\\multiple\\": "src"
         }
+    },
+    "provide": {
+        "bower-asset/jquery": "*",
+        "bower-asset/bootstrap": "*",
+        "bower-asset/inputmask": "*",
+        "bower-asset/punycode": "*",
+        "bower-asset/typeahead.js": "*",
+        "bower-asset/yii2-pjax": "*"
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": false
+        }
     }
 }

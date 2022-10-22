@@ -21,8 +21,12 @@
 			}
 		}
 
-		public function beforeAction($action)
-		{
+        /**
+         * @throws \Throwable
+         * @throws ForbiddenHttpException
+         */
+        public function beforeAction($action): bool
+        {
 			$actionId = $this->getActionId($action);
 
 			$identity = $this->user->getIdentity();
@@ -34,8 +38,8 @@
 			return true;
 		}
 
-		protected function getActionId($action)
-		{
+		protected function getActionId($action): string
+        {
 			return $action->controller->id . '/' . $action->id;
 		}
 	}

@@ -2,16 +2,23 @@
 
 	namespace umono\multiple\modules;
 
-	use umono\multiple\service\RequestService;
+    use umono\multiple\service\RequestService;
 	use yii\web\Application;
 	use yii\web\Response;
+    use yii\web\User;
 
-	class BaseModule extends AbstractModule
+    class BaseModule extends AbstractModule
 	{
 
-		public static function getUserComponent()
-		{
-			return null;
+		public static function getUserComponent(): array
+        {
+			return [
+                'class'           => User::class,
+                'identityClass'   => User::class,
+                'enableAutoLogin' => false,
+                'enableSession'   => false,
+                'loginUrl'        => null,
+            ];
 		}
 
 

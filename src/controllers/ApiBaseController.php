@@ -6,9 +6,10 @@
 	use yii\filters\Cors;
 	use yii\filters\RateLimiter;
 	use yii\filters\VerbFilter;
-	use yii\web\Response;
+    use yii\web\Controller;
+    use yii\web\Response;
 
-	abstract class ApiBaseController extends \yii\web\Controller
+	abstract class ApiBaseController extends Controller
 	{
 
 		public $enableCsrfValidation = false;
@@ -58,8 +59,8 @@
 			return $data;
 		}
 
-		protected function verbs()
-		{
+		protected function verbs(): array
+        {
 			return [];
 		}
 

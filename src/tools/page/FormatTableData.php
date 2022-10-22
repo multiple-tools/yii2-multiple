@@ -93,11 +93,11 @@
 		 *
 		 * ```
 		 * @param $attributes
-		 * @param $select
+		 * @param array $select
 		 * @return array
 		 */
-		public function tableTitle($attributes, $select = [])
-		{
+		public function tableTitle($attributes, array $select = []): array
+        {
 			if (empty($select)) {
 				$select = Yii::$app->request->get('select') ?? [];
 			}

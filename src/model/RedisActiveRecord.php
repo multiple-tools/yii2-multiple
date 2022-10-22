@@ -12,11 +12,11 @@
 		// 防止部署多个项目时每个项目都使用同样的key值
 		public static function keyPrefix()
 		{
-			return getenv('APP_URL') . Inflector::camel2id(StringHelper::basename(get_called_class()), '_');
+			return $_ENV['APP_URL'] . Inflector::camel2id(StringHelper::basename(get_called_class()), '_');
 		}
 
-		public static function getDb()
-		{
+		public static function getDb(): array
+        {
 			return [];
 		}
 

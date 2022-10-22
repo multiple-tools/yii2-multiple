@@ -22,8 +22,8 @@
 		 * @return \yii\web\IdentityInterface|null
 		 * @throws UnauthorizedHttpException
 		 */
-		public function authenticate($user, $request, $response)
-		{
+		public function authenticate($user, $request, $response): ?\yii\web\IdentityInterface
+        {
 			$authHeader = $request->getHeaders()->get($this->header);
 
 			if ($authHeader !== null) {
@@ -49,8 +49,8 @@
 			throw new UnauthorizedHttpException('必须登陆才能进行操作');
 		}
 
-		protected function getActionId($action)
-		{
+		protected function getActionId($action): string
+        {
 			return $action->controller->id . '/' . $action->id;
 		}
 	}

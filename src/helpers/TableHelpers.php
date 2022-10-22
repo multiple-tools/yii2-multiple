@@ -31,6 +31,9 @@
             $this->$name = $params[0];
         }
 
+        /**
+         * @throws ForbiddenHttpException
+         */
         public function setCreateIndex(array $columns)
         {
             $table = $this->table;

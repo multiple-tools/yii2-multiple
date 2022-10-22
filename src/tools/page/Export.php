@@ -5,7 +5,7 @@
 
 	use umono\multiple\model\ActiveRecordModel;
 	use Yii;
-	use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+	use OpenSpout\Writer\Common\Creator\WriterEntityFactory;
 	use yii\web\BadRequestHttpException;
 	use yii\web\Response;
 

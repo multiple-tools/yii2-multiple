@@ -2,25 +2,24 @@
 
 	namespace umono\multiple\service;
 
-	use app\common\tools\Encrypt\AesEncrypt;
 	use umono\multiple\helpers\AesEncryptHelper;
 	use yii\base\InvalidConfigException;
 
 	class LoginService
 	{
-		public static $aesClass = AesEncrypt::class;
+		public static $aesClass = AesEncryptHelper::class;
 
 
 		public static function verbs()
 		{
 			return [
-				'admin' => AesEncrypt::class
+				'admin' => AesEncryptHelper::class
 			];
 		}
 
 		// 验证token
-		public static function verificationToken($token, $name)
-		{
+		public static function verificationToken($token, $name): array
+        {
 			if (!empty($token)) {
 				$tokens = static::decode($token, $name);
 				if (empty($tokens)) {
@@ -42,8 +41,11 @@
 			}
 		}
 
-		private static function decode($token, $scope)
-		{
+        /**
+         * @throws InvalidConfigException
+         */
+        private static function decode($token, $scope): string
+        {
 			$token = str_replace(' ', "+", $token);
 
 			/**

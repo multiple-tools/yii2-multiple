@@ -2,7 +2,8 @@
 
 	namespace umono\multiple\controllers;
 
-	use umono\multiple\interceptor\HttpHeaderAuth;
+	use umono\multiple\interceptor\AccessControl;
+    use umono\multiple\interceptor\HttpHeaderAuth;
 	use yii\filters\ContentNegotiator;
 	use yii\filters\Cors;
 	use yii\filters\RateLimiter;
@@ -49,25 +50,11 @@
 					'class'    => HttpHeaderAuth::class,
 					'header'   => 'X-Access-Token',
 					'clientId' => $this->getClientId(),
-					'optional' => [
-						'auth/login',
-						'auth/phone-login',
-						'auth/get-code',
-						'auth/logout',
-						'auth/scan',
-						'test/*',
-					],
+					'optional' => [],
 				],
 				'access'  => [
 					'class'  => AccessControl::class,
-					'except' => [
-						'auth/login',
-						'auth/phone-login',
-						'auth/get-code',
-						'auth/logout',
-						'auth/scan',
-						'test/*',
-					],
+					'except' => [],
 				],
 				'rate'    => [
 					'class' => RateLimiter::class,

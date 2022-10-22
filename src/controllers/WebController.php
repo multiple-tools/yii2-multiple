@@ -32,8 +32,8 @@
 			return parent::renderPartial($this->changeTemplatesViewPath($view), $params);
 		}
 
-		public function getBackUrl($default = ['site/index'])
-		{
+		public function getBackUrl($default = ['site/index']): ?string
+        {
 			$backUrl = Yii::$app->getRequest()->getReferrer();
 
 			if (empty($backUrl)) {

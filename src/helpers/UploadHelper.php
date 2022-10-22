@@ -118,7 +118,7 @@
 					}
 				}
 
-				$url = getenv("APP_URL") . $publicFilePath;
+				$url = $_ENV["APP_URL"] . $publicFilePath;
 				if ($this->ifUploadOss) {
 
 					switch ($this->ifUpload) {

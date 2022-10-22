@@ -67,9 +67,9 @@
 		 * @return array|mixed|\yii\db\ActiveRecord[]
 		 */
 		public static function backCacheList(
-			$where = [],
-			$with = [],
-			$options = []
+			array $where = [],
+            array $with = [],
+            array $options = []
 		)
 		{
 			$select     = $options['select'] ?? ['*'];

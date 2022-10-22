@@ -2,8 +2,6 @@
 
 	namespace umono\multiple\helpers;
 
-	use app\common\helpers\OverHelper;
-	use Imagine\Image\ManipulatorInterface;
 	use yii\imagine\Image;
 
 	class ImageHelper
@@ -26,7 +24,7 @@
 		//缩略图（压缩）
 		public static function actionThumb($file, $width, $height, $quality)
 		{
-			$img        = Image::thumbnail($file, $width, $height, ManipulatorInterface::THUMBNAIL_FLAG_NOCLONE);
+			$img        = Image::thumbnail($file, $width, $height, 0x00020000);
 			$fileName    = basename($file);
 			$fileNameArr = explode(".", $fileName);
 			$thumbFile   = $file . '_ss_.' . $fileNameArr[1];
