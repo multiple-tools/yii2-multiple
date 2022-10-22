@@ -1,88 +1,93 @@
 <?php
 
-	namespace umono\multiple\modules;
+    namespace umono\multiple\modules;
 
-	use yii\base\Module;
-	use yii\console\Application as ConsoleApplication;
-	use yii\helpers\Url;
-	use yii\web\Application as WebApplication;
-	use yii\web\GroupUrlRule;
+    use yii\base\Module;
+    use yii\console\Application as ConsoleApplication;
+    use yii\helpers\Url;
+    use yii\web\Application as WebApplication;
+    use yii\web\GroupUrlRule;
 
-	abstract class AbstractModule extends Module
-	{
-		public $disableDebugModule = false;
+    abstract class AbstractModule extends Module
+    {
+        public static $urlPrefix;
+        public static $moduleId = null;
 
-		abstract public static function getUserComponent();
-
-		/**
-		 * @return array|null
-		 */
-		public static function getUrlRules(): ?array
+        public static function getUserComponent()
         {
-			return [
-				'class'       => GroupUrlRule::class,
-				'prefix'      => static::getUrlPrefix(),
-				'routePrefix' => static::getRoutePrefix(),
-				'rules'       => static::getRouteRules(),
-			];
-		}
+            return null;
+        }
 
-		public static function getUrlPrefix()
-		{
-			return static::getModuleId();
-		}
-
-		public static function getModuleId()
-		{
-			return null;
-		}
-
-		public static function getRoutePrefix()
-		{
-			return static::getModuleId();
-		}
-
-		public static function getRouteRules(): array
+        /**
+         * @return array|null
+         */
+        public static function getUrlRules(): ?array
         {
-			return [
-				''                      => 'site/index',
-				'<controller>'          => '<controller>/index',
-				'<controller>/<action>' => '<controller>/<action>',
-			];
-		}
+            return [
+                'class'       => GroupUrlRule::class,
+                'prefix'      => static::getUrlPrefix(),
+                'routePrefix' => static::getRoutePrefix(),
+                'rules'       => static::getRouteRules(),
+            ];
+        }
 
-		public static function toRoute($route, $scheme = false): string
-		{
-			if (is_array($route)) {
-				$route[0] = '/' . static::getUrlPrefix() . '/' . $route[0];
-			} else {
-				$route = '/' . static::getUrlPrefix() . '/' . $route;
-			}
-			return Url::toRoute($route, $scheme);
-		}
+        public static function getUrlPrefix()
+        {
+            return static::$urlPrefix;
+            //return static::getModuleId();
+        }
 
-		public function init()
-		{
-			parent::init();
+        public static function getModuleId()
+        {
+            return static::$moduleId;
+        }
 
-			$this->layout = 'main';
+        public static function getRoutePrefix()
+        {
+            return static::getModuleId();
+        }
 
-			if (\Yii::$app instanceof WebApplication) {
-				\Yii::$app->getErrorHandler()->errorAction = static::getRoutePrefix() . '/site/error';
-			}
+        public static function getRouteRules(): array
+        {
+            return [
+                ''                      => 'site/index',
+                '<controller>'          => '<controller>/index',
+                '<controller>/<action>' => '<controller>/<action>',
+            ];
+        }
 
-			if (\Yii::$app instanceof ConsoleApplication) {
-				$this->controllerNamespace = (new \ReflectionClass(
-						get_called_class()))->getNamespaceName() . '\\commands';
-			}
+        public static function toRoute($route, $scheme = false): string
+        {
+            if (is_array($route)) {
+                $route[0] = '/' . static::getUrlPrefix() . '/' . $route[0];
+            } else {
+                $route = '/' . static::getUrlPrefix() . '/' . $route;
+            }
+            return Url::toRoute($route, $scheme);
+        }
 
-			if ($this->disableDebugModule) {
-				/* @var $debug \yii\debug\Module|null */
-				$debug = \Yii::$app->getModule('debug');
+        public function init()
+        {
+            parent::init();
 
-				if ($debug) {
-					$debug->allowedIPs = [];
-				}
-			}
-		}
-	}
+            $this->layout = 'main';
+
+            if (\Yii::$app instanceof WebApplication) {
+                \Yii::$app->getErrorHandler()->errorAction = static::getRoutePrefix() . '/site/error';
+            }
+
+            if (\Yii::$app instanceof ConsoleApplication) {
+                $this->controllerNamespace = (new \ReflectionClass(
+                        get_called_class()))->getNamespaceName() . '\\commands';
+            }
+
+            if ($_ENV['APP_DEBUG']) {
+                /* @var $debug \yii\debug\Module|null */
+                $debug = \Yii::$app->getModule('debug');
+
+                if ($debug) {
+                    $debug->allowedIPs = [];
+                }
+            }
+        }
+    }

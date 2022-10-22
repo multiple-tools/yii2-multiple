@@ -7,7 +7,7 @@
 	use yii\web\Response;
     use yii\web\User;
 
-    class BaseModule extends AbstractModule
+    class ApiBaseModule extends AbstractModule
 	{
 
 		public static function getUserComponent(): array
@@ -20,7 +20,6 @@
                 'loginUrl'        => null,
             ];
 		}
-
 
 		public $startTime;
 
