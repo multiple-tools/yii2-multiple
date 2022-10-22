@@ -18,7 +18,7 @@
             return null;
         }
 
-        public static function getUrlRules()
+        public static function getUrlRules(): array
         {
             return [
                 'class'       => GroupUrlRule::class,
@@ -44,7 +44,7 @@
             return static::getModuleId();
         }
 
-        public static function getRouteRules()
+        public static function getRouteRules(): array
         {
             return [
                 ''                      => 'site/index',
