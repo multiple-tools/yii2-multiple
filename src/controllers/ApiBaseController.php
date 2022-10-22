@@ -59,7 +59,7 @@
 			return $data;
 		}
 
-		protected function verbs(): array
+		protected function verbs()
         {
 			return [];
 		}
