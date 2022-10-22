@@ -20,8 +20,4 @@
                 \app\modules\website\Module::getModuleId()  => \app\modules\website\Module::class,
             ];
         }
-
-        public static function url_rule()
-        {
-        }
     }

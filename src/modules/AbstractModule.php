@@ -11,17 +11,14 @@
     abstract class AbstractModule extends Module
     {
         public static $urlPrefix;
-        public static $moduleId = null;
+        public static $moduleId;
 
         public static function getUserComponent()
         {
             return null;
         }
 
-        /**
-         * @return array|null
-         */
-        public static function getUrlRules(): ?array
+        public static function getUrlRules()
         {
             return [
                 'class'       => GroupUrlRule::class,
@@ -47,7 +44,7 @@
             return static::getModuleId();
         }
 
-        public static function getRouteRules(): array
+        public static function getRouteRules()
         {
             return [
                 ''                      => 'site/index',

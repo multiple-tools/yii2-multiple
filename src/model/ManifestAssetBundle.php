@@ -19,6 +19,7 @@
 		public $etag = '';
 
 
+        // 引入前端资源
 		public static function register($view)
 		{
 			/* @var $bundle ManifestAssetBundle */
