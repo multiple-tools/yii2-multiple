@@ -5,12 +5,21 @@
 
     use umono\multiple\tools\page\FormatTableData;
     use umono\multiple\tools\page\PageHandler;
+    use yii\db\ActiveQuery;
     use yii\db\ActiveRecord;
+    use yii\helpers\Inflector;
+    use yii\helpers\StringHelper;
     use yii\web\ForbiddenHttpException;
     use yii\web\NotFoundHttpException;
 
     abstract class ActiveRecordModel extends ActiveRecord
     {
+        public function __construct($config = [])
+        {
+            parent::__construct($config);
+            static::$modelInstance = $this;
+        }
+
         use ModelHelper;
 
         use FormatTableData;
@@ -20,20 +29,34 @@
         /**
          * 格式化所有数据 提供导出时的数据 也可做为循环数据处理
          *
-         * @param       $model
+         * @param       $item
          * @param bool  $info
          * @param array $options
          * @return mixed
          */
-        public static function transFormatData($model, bool $info = false, array $options = [])
+        public static function transFormatData($item, bool $info = false, array $options = [])
         {
-            return $model;
+            return $item;
         }
 
-        public static function toTaleDataArray($model, $whereParam, $withTable, $select): array
+        public static $modelInstance = null;
+
+        public static function getModel()
         {
-            $page = new PageHandler();
-            return $page->toTableData($model, $whereParam, $withTable, $select);
+            if (static::$modelInstance == null) {
+                $className = static::class;
+                new $className;
+            }
+            return static::$modelInstance;
+        }
+
+        public static function page(): PageHandler
+        {
+            $page             = new PageHandler();
+            $page->query      = static::find();
+            $page->table      = static::tableName();
+            $page->modelClass = static::getModel();
+            return $page;
         }
 
         /**
