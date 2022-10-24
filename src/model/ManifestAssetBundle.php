@@ -1,77 +1,76 @@
 <?php
-	declare(strict_types=1);
+    declare(strict_types=1);
 
-	namespace umono\multiple\model;
+    namespace umono\multiple\model;
 
 
-	use InvalidArgumentException;
-	use yii\base\BaseObject;
-	use yii\web\View;
-	use yii\helpers\Json;
-	use yii\web\ForbiddenHttpException;
+    use InvalidArgumentException;
+    use yii\base\BaseObject;
+    use yii\helpers\ArrayHelper;
+    use yii\web\View;
+    use yii\helpers\Json;
+    use yii\web\ForbiddenHttpException;
 
-	class ManifestAssetBundle extends BaseObject
-	{
-		public $manifestFile = 'manifest.json';
-		public $manifestPath = '@webroot/statics/build';
-		public $js = [];
-		public $css = [];
-		public $etag = '';
-
+    class ManifestAssetBundle extends BaseObject
+    {
+        public $manifestFile = 'manifest.json';
+        public $assetPath = DIRECTORY_SEPARATOR . 'statics' . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR;
+        public $js = [];
+        public $css = [];
+        public $etag = '';
 
         // 引入前端资源
-		public static function register($view)
-		{
-			/* @var $bundle ManifestAssetBundle */
-			$bundle = \Yii::createObject(get_called_class());
+        public static function register(View $view)
+        {
+            /* @var $bundle ManifestAssetBundle */
+            $bundle = \Yii::createObject(get_called_class());
 
-			$responseHeaders = \Yii::$app->getResponse()->getHeaders();
+            $responseHeaders = \Yii::$app->getResponse()->getHeaders();
 
-			$responseHeaders->set('ETag', $bundle->etag);
+            $responseHeaders->set('ETag', $bundle->etag);
 
-			foreach ($bundle->js as $js) {
-				$view->registerJsFile($js);
-			}
+            foreach ($bundle->js as $js) {
+                $view->registerJsFile($bundle->assetPath . $js,['type'=>'module','crossorigin'=>true]);
+            }
 
-			foreach ($bundle->css as $css) {
-				$view->registerCssFile($css);
-			}
-		}
+            foreach ($bundle->css as $css) {
+                $view->registerCssFile($bundle->assetPath . $css);
+            }
+        }
 
-		public function init()
-		{
+        public function init()
+        {
 
-			parent::init();
+            parent::init();
 
-			$manifestPath = \Yii::getAlias($this->manifestPath);
+            $manifestPath = \Yii::getAlias("@app/web") . $this->assetPath;
 
-			$manifestFile = $manifestPath . DIRECTORY_SEPARATOR . $this->manifestFile;
+            $manifestFile = $manifestPath . $this->manifestFile;
 
-			if (!file_exists($manifestFile)) {
-				throw new ForbiddenHttpException('manifest.json is not exist.');
-			}
+            if (!file_exists($manifestFile)) {
+                throw new ForbiddenHttpException('manifest.json is not exist.');
+            }
 
-			$this->parseManifestFile($manifestFile);
-		}
+            $this->parseManifestFile($manifestFile);
+        }
 
-		protected function parseManifestFile($manifestFile)
-		{
-			$text = file_get_contents($manifestFile);
+        protected function parseManifestFile($manifestFile)
+        {
+            $text = file_get_contents($manifestFile);
 
-			$this->etag = md5($text);
+            $this->etag = md5($text);
 
-			$json = Json::decode($text);
+            $json = Json::decode($text);
 
-			foreach ($json as $file => $url) {
-				$fileExt = pathinfo($file, PATHINFO_EXTENSION);
-
-				if ($fileExt == 'js') {
-					$this->js[] = $url;
-				}
-
-				if ($fileExt == 'css') {
-					$this->css[] = $url;
-				}
-			}
-		}
-	}
+            foreach ($json as $file => $url) {
+                if ($file =='index.html') {
+                    if ($url['file']) {
+                        $this->js[] = $url['file'];
+                    }
+                    if (isset($url['css']) && !empty($url['css'])) {
+                        $this->css = ArrayHelper::merge($this->css, $url['css']);
+                    }
+                }
+            }
+        }
+    }
