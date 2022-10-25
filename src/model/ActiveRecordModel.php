@@ -14,12 +14,6 @@
 
     abstract class ActiveRecordModel extends ActiveRecord
     {
-        public function __construct($config = [])
-        {
-            parent::__construct($config);
-            static::$modelInstance = $this;
-        }
-
         use ModelHelper;
 
         use FormatTableData;
@@ -39,23 +33,13 @@
             return $item;
         }
 
-        public static $modelInstance = null;
-
-        public static function getModel()
-        {
-            if (static::$modelInstance == null) {
-                $className = static::class;
-                new $className;
-            }
-            return static::$modelInstance;
-        }
-
         public static function page(): PageHandler
         {
             $page             = new PageHandler();
             $page->query      = static::find();
             $page->table      = static::tableName();
-            $page->modelClass = static::getModel();
+            $className        = static::class;
+            $page->modelClass = new $className;
             return $page;
         }
 

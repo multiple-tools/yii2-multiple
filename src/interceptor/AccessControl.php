@@ -2,10 +2,12 @@
 
 	namespace umono\multiple\interceptor;
 
-	use yii\base\ActionFilter;
+	use app\modules\backend\api\models\admin\Admin;
+    use yii\base\ActionFilter;
 	use yii\di\Instance;
 	use yii\web\ForbiddenHttpException;
-	use yii\web\User;
+    use yii\web\IdentityInterface;
+    use yii\web\User;
 
 	class AccessControl extends ActionFilter
 	{

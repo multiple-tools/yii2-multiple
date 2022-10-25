@@ -60,6 +60,18 @@
 			return true;
 		}
 
+        /**
+         * 判断是否为邮箱
+         *
+         * @param $email
+         * @return int
+         */
+        public static function isEmail($email)
+        {
+            $regex = '/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/';
+            return preg_match($regex, $email);
+        }
+
 		/**
 		 * @param $integer
 		 *
