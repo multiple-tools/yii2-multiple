@@ -15,10 +15,6 @@
         public $user_id;
         public $user;
         public $get;
-        /**
-         * @var PageHandler $page
-         */
-        public $page;
 
         /**
          * @throws UnauthorizedHttpException
