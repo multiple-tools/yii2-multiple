@@ -19,9 +19,6 @@
             $key   = static::class . '-attributeLabels';
             $data  = $cache->get($key);
             if ($data == false) {
-                /**
-                 * @var $this ActiveRecord
-                 */
                 $arr = $this->attributeLabels();
                 if (count($arr) <= 10) {
                     $width = '';
