@@ -2,7 +2,6 @@
 
 	namespace umono\multiple\helpers;
 
-	use app\common\tools\Ali\AliOss;
 	use yii\helpers\FileHelper;
 	use yii\web\ForbiddenHttpException;
 	use yii\web\UploadedFile;
@@ -23,7 +22,7 @@
 		private $publicPath;            // 资源路径
 		public $param;                  // 传递的所有参数
 
-		public $ifUploadOss = true;
+		public $ifUploadOss = false;
 		public $ifUpload = "ali";      // ali,qin
 
 		// 上传文件的表单属性 如果为base64则视为base64资源，其他做为文件参数属性.参考 UploadedFile::getInstancesByName
@@ -36,30 +35,32 @@
 		 * @param $name
 		 * @return void
 		 */
-		public function setFileByName($name)
+		public function setUploadFileByName($name)
 		{
 			$this->fileByName = $name;
 		}
 
 
-		/**
-		 * @throws \yii\base\Exception
-		 * @throws ForbiddenHttpException
-		 */
-		public function __construct($type, $param, $userId = 0)
+        /**
+         * @param $handlerFileType
+         * @param $param
+         * @param $userId
+         * @throws ForbiddenHttpException
+         * @throws \yii\base\Exception
+         */
+		public function __construct($handlerFileType, $param, $userId = 0)
 		{
-			$this->fileHandleType = $type;
+			$this->fileHandleType = $handlerFileType;
 			$this->userId         = $userId;
 			$this->param          = $param;
 
-			if (!in_array($type, $this->canTypes)) {
+			if (!in_array($handlerFileType, $this->canTypes)) {
 				$this->error('Unsupported upload type name.');
 			}
-			$publicPath = "/uploads/admins/" . $this->fileHandleType . '/' . date('Y-m-d') . '/';
+			$publicPath = "uploads/admins/" . $this->fileHandleType . '/' . date('Y-m-d') . '/';
 
-			$this->basePath   = dirname(\Yii::getAlias("@app/web")) . $publicPath;
+			$this->basePath   = \Yii::getAlias("@app/web").'/' . $publicPath;
 			$this->publicPath = $publicPath;
-
 			if (!file_exists($this->basePath)) {
 				if (!FileHelper::createDirectory($this->basePath, 0777)) {
 					$this->error("Failed to create folder.");
@@ -110,7 +111,8 @@
 
 				if($type > 0 || $type < 19) {
 					// 压缩图片
-					ImageHelper::actionThumb($filePath, $this->watermarkText, $this->watermarkSize);
+                    $fileInfo = getimagesize($filePath);
+					ImageHelper::actionThumb($filePath, $fileInfo[0],$fileInfo[1],90);
 
 					// 是否存储水印
 					if ($this->watermark) {
@@ -120,10 +122,9 @@
 
 				$url = $_ENV["APP_URL"] . $publicFilePath;
 				if ($this->ifUploadOss) {
-
 					switch ($this->ifUpload) {
 						case 'ali':
-							$url = AliOss::uploadFile($resetName, $file->extension, $filePath);
+							$url = null;
 							break;
 						case "qin":
 							$url = 'qiniu??';

@@ -14,10 +14,10 @@
         protected $limit = 20;
         protected $page = 1;
         protected $offset;
-        public $select = ['*'];
         public $hiddenColumnWhere = ['is_del' => 0];
         public $orWhere = []; // 额外的条件
         public $andWhere = [];// 额外的条件
+        private $select = ['*'];
         private $sqlCacheParam = []; // 额外的缓存sql参数用于导出时条件复现
         private $showSelectTable = [];
         private $orderBy = [];
@@ -364,6 +364,12 @@
         public function setSqlCacheParam($sqlCacheParam)
         {
             $this->sqlCacheParam = $sqlCacheParam;
+            return $this;
+        }
+
+        public function setColumn($select)
+        {
+            $this->select = $select;
             return $this;
         }
 
