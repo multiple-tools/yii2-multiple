@@ -299,6 +299,7 @@
 
             $uid = StringHelper::guid();
 
+            SqlPageCache::writeSql($query->modelClass, $uid.'-MODEL');
             SqlPageCache::writeSql($query->orderBy($this->orderBy)->__toString(), $uid);
             if (!empty($this->sqlCacheParam)) {
                 SqlPageCache::writeSql(json_encode($this->sqlCacheParam), $uid . '-PARAM');

@@ -1,32 +1,29 @@
 <?php
 
-	namespace umono\multiple\tools\page;
+    namespace umono\multiple\tools\page;
 
-	/**
-	 * SQL 查询分页数据记录
-	 */
-	class SqlPageCache
-	{
-		public static function writeSql($sql, $uid)
-		{
-			$cache = \Yii::$app->cache;
-			$cache->set('SQL_CACHE_' . $uid, $sql, 3600 * 6);
-			unset($cache);
-		}
+    /**
+     * SQL 查询分页数据记录
+     */
+    class SqlPageCache
+    {
+        public static function writeSql($sql, $uid)
+        {
+            \Yii::$app->getCache()->set('SQL_CACHE_' . $uid, $sql, 3600 * 6);
+        }
 
-		public static function findOneByParam($uid)
-		{
-			$cache = \Yii::$app->cache;
-			$res   = $cache->get('SQL_CACHE_' . $uid . '-PARAM');
-			unset($cache);
-			return $res;
-		}
+        public static function finOneByModelClass($uid)
+        {
+            return \Yii::$app->getCache()->get('SQL_CACHE_' . $uid . '-MODEL');
+        }
 
-		public static function findOneBy($uid)
-		{
-			$cache = \Yii::$app->cache;
-			$res   = $cache->get('SQL_CACHE_' . $uid);
-			unset($redis);
-			return $res;
-		}
-	}
+        public static function findOneByParam($uid)
+        {
+            return \Yii::$app->getCache()->get('SQL_CACHE_' . $uid . '-PARAM');
+        }
+
+        public static function findOneBy($uid)
+        {
+            return \Yii::$app->getCache()->get('SQL_CACHE_' . $uid);
+        }
+    }
