@@ -214,11 +214,15 @@
             if (is_array($where)) {
                 if (count($where) == count($where, 1)) {
                     $where = $this->whereHandler($where, $table);
-                    $this->query->andWhere($where);
+                    if (!empty($where)) {
+                        $this->query->andWhere($where);
+                    }
                 } else {
                     foreach ($where as $value) {
                         $value = $this->whereHandler($value, $table);
-                        $this->query->andWhere($value);
+                        if (!empty($value)) {
+                            $this->query->andWhere($value);
+                        }
                     }
                 }
                 unset($where);
@@ -252,11 +256,15 @@
             if (is_array($where)) {
                 if (count($where) == count($where, 1)) {
                     $where = $this->whereHandler($where, $table);
-                    $this->query->orWhere($where);
+                    if (!empty($where)) {
+                        $this->query->orWhere($where);
+                    }
                 } else {
                     foreach ($where as $value) {
                         $value = $this->whereHandler($value, $table);
-                        $this->query->orWhere($value);
+                        if (!empty($value)) {
+                            $this->query->orWhere($value);
+                        }
                     }
                 }
             } else {
@@ -276,6 +284,9 @@
                 }
             } else {
                 $arr = [$where[0], $table . '.' . $where[1], $where[2]];
+                if (empty($arr[2])) {
+                    $arr = [];
+                }
             }
             unset($countWhere);
             unset($where);
@@ -299,7 +310,7 @@
 
             $uid = StringHelper::guid();
 
-            SqlPageCache::writeSql($query->modelClass, $uid.'-MODEL');
+            SqlPageCache::writeSql($query->modelClass, $uid . '-MODEL');
             SqlPageCache::writeSql($query->orderBy($this->orderBy)->__toString(), $uid);
             if (!empty($this->sqlCacheParam)) {
                 SqlPageCache::writeSql(json_encode($this->sqlCacheParam), $uid . '-PARAM');
