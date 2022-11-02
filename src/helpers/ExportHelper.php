@@ -27,7 +27,7 @@
         {
             self::can();
 
-            $export = new Export(null, $param['fileName']);
+            $export = new Export(null, $param['fileName']??'');
 
             $header = self::handlerHeader($param['tableHeader']);
             $select = self::handlerSelect($param);

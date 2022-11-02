@@ -59,7 +59,7 @@
 
             $this->path = $path;
 
-            $this->fileName = ($fileName ?? '') . '[' . date('Y-m-d h:i:s') . '].xlsx';;
+            $this->fileName = ($fileName) . '[' . date('Y-m-d h:i:s') . '].xlsx';;
         }
 
         public function setSql($uid)
