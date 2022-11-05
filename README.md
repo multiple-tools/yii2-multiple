@@ -31,5 +31,5 @@ Once the extension is installed, simply use it in your code by  :
 
 Document
 -----
-https://zircote.github.io/swagger-php/guide/faq.html#skipping-unknown-someclass
-https://www.kancloud.cn/punghunger/apidoc/934753
+[swagger-doc](https://zircote.github.io/swagger-php/guide/faq.html#skipping-unknown-someclass)
+[swagger-doc](https://www.kancloud.cn/punghunger/apidoc/934753)
