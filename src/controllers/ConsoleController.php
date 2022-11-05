@@ -17,8 +17,8 @@
             $copyDir = [
                 \Yii::getAlias("@base") . "/vendor/swagger-api/swagger-ui"         => "swagger-ui",
                 \Yii::getAlias("@base") . "/vendor/twbs/bootstrap"                 => "bootstrap",
-                \Yii::getAlias("@base") . "/extend/yii2-multiple/assets/jquery"    => "jquery",
-                \Yii::getAlias("@base") . "/extend/yii2-multiple/assets/yii2-pjax" => "yii2-pjax",
+                \Yii::getAlias("@base") . "/umono/yii2-multiple/assets/jquery"    => "jquery",
+                \Yii::getAlias("@base") . "/umono/yii2-multiple/assets/yii2-pjax" => "yii2-pjax",
             ];
             foreach ($copyDir as $k => $v) {
                 @mkdir($assets . $v, 0777, true);
