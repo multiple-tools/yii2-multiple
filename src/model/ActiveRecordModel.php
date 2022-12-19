@@ -20,6 +20,16 @@
 
         public $renderListJoinTable = [];
 
+
+        public static function camel2id(): string
+        {
+            $className = static::className();
+
+            $modelStrName = explode('\\',$className);
+
+            return Inflector::camel2id($modelStrName[count($modelStrName)-1]);
+        }
+
         /**
          * 格式化所有数据 提供导出时的数据 也可做为循环数据处理
          *
